@@ -1,6 +1,11 @@
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config()
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-export const SERVICE_NAME = process.env.SERVICE_NAME
-export const MONGO_URL = process.env.MONGO_URL
+dotenv.config();
+
+export const SERVICE_NAME = process.env.SERVICE_NAME;
+export const MONGO_URL = process.env.MONGO_URL;
+export const rootPath = path.resolve(__dirname, "..");

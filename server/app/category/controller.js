@@ -17,7 +17,7 @@ export const index = async (req, res) => {
       alert,
     });
   } catch (error) {
-    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
     res.redirect("/category");
   }
@@ -27,7 +27,7 @@ export const viewCreate = async (req, res) => {
   try {
     res.render("admin/category/create", { title: "Create Category", pageName });
   } catch (error) {
-    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
     res.redirect("/category");
   }
@@ -46,7 +46,7 @@ export const actionCreate = async (req, res) => {
 
     res.redirect("/category");
   } catch (error) {
-    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
     res.redirect("/category");
   }
@@ -64,7 +64,7 @@ export const viewEdit = async (req, res) => {
       pageName,
     });
   } catch (error) {
-    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
     res.redirect("/category");
   }
@@ -82,7 +82,7 @@ export const actionEdit = async (req, res) => {
 
     res.redirect("/category");
   } catch (error) {
-    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
     res.redirect("/category");
   }
@@ -99,7 +99,7 @@ export const actionDelete = async (req, res) => {
 
     res.redirect("/category");
   } catch (error) {
-    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
     res.redirect("/category");
   }

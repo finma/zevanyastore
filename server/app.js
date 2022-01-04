@@ -11,6 +11,7 @@ import session from "express-session";
 
 import indexRouter from "./app/dashboard/router";
 import categoryRouter from "./app/category/router";
+import productRouter from "./app/product/router";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -44,6 +45,7 @@ app.use(
 
 app.use("/", indexRouter);
 app.use("/category", categoryRouter);
+app.use("/product", productRouter);
 
 //! catch 404 and forward to error handler
 app.use(function (req, res, next) {
