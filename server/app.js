@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
 import createError from "http-errors";
+import methodOverride from "method-override";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -19,6 +20,7 @@ app.use(cors());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(methodOverride("_method"));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

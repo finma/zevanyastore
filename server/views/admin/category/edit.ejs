@@ -26,13 +26,20 @@
         <div class="col-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Form Create Category</h3>
+              <h3 class="card-title">Form Edit Category</h3>
             </div>
-            <form action="/category/create" method="POST">
+            <form action="/category/edit/<%= category._id %>?_method=PUT " method="POST">
               <div class="card-body">
                 <div class="form-group">
                   <label for="name">Category Name</label>
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Category name ..." required>
+                  <input 
+                    id="name" 
+                    name="name" 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Category name ..." 
+                    value="<%= category.name %>" 
+                    required>
                 </div>
               </div>
               <div class="card-footer">
