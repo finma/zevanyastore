@@ -4,23 +4,32 @@ const pageName = "category";
 
 export const index = async (req, res) => {
   try {
+    const alertMessage = req.flash("alertMessage");
+    const alertStatus = req.flash("alertStatus");
+    const alert = { message: alertMessage, status: alertStatus };
+
     const categories = await Category.find();
 
     res.render("admin/category/view_category", {
       title: "Category",
       categories,
       pageName,
+      alert,
     });
   } catch (error) {
-    console.log(error);
+    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/category");
   }
 };
 
 export const viewCreate = async (req, res) => {
   try {
-    res.render("admin/category/create", { title: "Add Category", pageName });
+    res.render("admin/category/create", { title: "Create Category", pageName });
   } catch (error) {
-    console.log(error);
+    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/category");
   }
 };
 
@@ -32,9 +41,14 @@ export const actionCreate = async (req, res) => {
 
     category.save();
 
+    req.flash("alertMessage", "Success create category");
+    req.flash("alertStatus", "success");
+
     res.redirect("/category");
   } catch (error) {
-    console.log(error);
+    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/category");
   }
 };
 
@@ -50,7 +64,9 @@ export const viewEdit = async (req, res) => {
       pageName,
     });
   } catch (error) {
-    console.log(error);
+    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/category");
   }
 };
 
@@ -61,9 +77,14 @@ export const actionEdit = async (req, res) => {
 
     await Category.findByIdAndUpdate({ _id: id }, { name });
 
+    req.flash("alertMessage", "Success update category");
+    req.flash("alertStatus", "success");
+
     res.redirect("/category");
   } catch (error) {
-    console.log(error);
+    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/category");
   }
 };
 
@@ -73,8 +94,13 @@ export const actionDelete = async (req, res) => {
 
     await Category.findByIdAndRemove({ _id: id });
 
+    req.flash("alertMessage", "Success delete category");
+    req.flash("alertStatus", "success");
+
     res.redirect("/category");
   } catch (error) {
-    console.log(error);
+    req.flash("alertMessage", `${err.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/category");
   }
 };

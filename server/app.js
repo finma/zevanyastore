@@ -1,11 +1,13 @@
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
 import createError from "http-errors";
 import methodOverride from "method-override";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import flash from "connect-flash";
+import session from "express-session";
 
 import indexRouter from "./app/dashboard/router";
 import categoryRouter from "./app/category/router";
@@ -20,6 +22,15 @@ app.use(cors());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {},
+  })
+);
+app.use(flash());
 app.use(methodOverride("_method"));
 app.use(logger("dev"));
 app.use(express.json());
