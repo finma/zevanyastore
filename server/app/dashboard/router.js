@@ -1,8 +1,8 @@
-import { Router } from 'express';
+import { Router } from "express";
+import { index } from "./controller";
+
 const router = Router();
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Dashboard' });
-});
+router.get("/", index);
 
 export default router;
