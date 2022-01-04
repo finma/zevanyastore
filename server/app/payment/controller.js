@@ -51,3 +51,58 @@ export const actionCreate = async (req, res) => {
     res.redirect("/payment");
   }
 };
+
+export const viewEdit = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payment = await Payment.findOne({ _id: id });
+
+    res.render("admin/payment/edit", {
+      title: "Update Payment",
+      payment,
+      pageName,
+    });
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/payment");
+  }
+};
+
+export const actionEdit = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, bankName, noRekening, type } = req.body;
+
+    await Payment.findByIdAndUpdate(
+      { _id: id },
+      { name, bankName, noRekening, type }
+    );
+
+    req.flash("alertMessage", "Success update payment");
+    req.flash("alertStatus", "success");
+
+    res.redirect("/payment");
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/payment");
+  }
+};
+
+export const actionDelete = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await Payment.findByIdAndRemove({ _id: id });
+
+    req.flash("alertMessage", "Success delete payment");
+    req.flash("alertStatus", "success");
+
+    res.redirect("/payment");
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/payment");
+  }
+};
