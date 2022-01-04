@@ -106,3 +106,115 @@ export const actionCreate = async (req, res) => {
     res.redirect("/product");
   }
 };
+
+export const viewEdit = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findOne({ _id: id }).populate("category");
+    const categories = await Category.find();
+
+    res.render("admin/product/edit", {
+      title: "Update Product",
+      product,
+      categories,
+      pageName,
+    });
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/product");
+  }
+};
+
+export const actionEdit = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, stock, price, category, description } = req.body;
+
+    if (req.file) {
+      let tmp_path = req.file.path;
+      let originalExt =
+        req.file.originalname.split(".")[
+          req.file.originalname.split(".").length - 1
+        ];
+      let filename = `${req.file.filename}.${originalExt}`;
+      let target_path = path.resolve(rootPath, `public/uploads/${filename}`);
+
+      const src = fs.createReadStream(tmp_path);
+      const dest = fs.createWriteStream(target_path);
+
+      src.pipe(dest);
+
+      src.on("end", async () => {
+        try {
+          const product = await Product.findOne({ _id: id });
+
+          let currentImage = `${rootPath}/public/uploads/${product.image}`;
+
+          if (fs.existsSync(currentImage)) {
+            fs.unlinkSync(currentImage);
+          }
+
+          await Product.findOneAndUpdate({
+            name,
+            stock,
+            price,
+            category,
+            image: filename,
+            description,
+          });
+
+          req.flash("alertMessage", "Success update product");
+          req.flash("alertStatus", "success");
+
+          res.redirect("/product");
+        } catch (error) {
+          req.flash("alertMessage", `${error.message}`);
+          req.flash("alertStatus", "danger");
+          res.redirect("/product");
+        }
+      });
+    } else {
+      await Product.findOneAndUpdate({
+        name,
+        stock,
+        price,
+        category,
+        description,
+      });
+
+      req.flash("alertMessage", "Success update product");
+      req.flash("alertStatus", "success");
+
+      res.redirect("/product");
+    }
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/product");
+  }
+};
+
+export const actionDelete = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findByIdAndRemove({ _id: id });
+
+    let currentImage = `${rootPath}/public/uploads/${product.image}`;
+
+    if (fs.existsSync(currentImage)) {
+      fs.unlinkSync(currentImage);
+    }
+
+    req.flash("alertMessage", "Success delete product");
+    req.flash("alertStatus", "success");
+
+    res.redirect("/product");
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/product");
+  }
+};

@@ -1,6 +1,5 @@
-<%- include ../../partials/header.ejs %> 
-<%- include ../../partials/navbar.ejs %> 
-<%- include ../../partials/sidebar.ejs %>
+<%- include ../../partials/header.ejs %> <%- include ../../partials/navbar.ejs
+%> <%- include ../../partials/sidebar.ejs %>
 
 <div class="content-wrapper">
   <div class="content-header">
@@ -31,19 +30,23 @@
             <div class="icon">
               <i class="fas fa-users"></i>
             </div>
-            <a href="/customer" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/customer" class="small-box-footer"
+              >More info <i class="fas fa-arrow-circle-right"></i
+            ></a>
           </div>
         </div>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>53</h3>
+              <h3><%= products %></h3>
               <p>Products</p>
             </div>
             <div class="icon">
               <i class="fas fa-boxes"></i>
             </div>
-            <a href="/product" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/product" class="small-box-footer"
+              >More info <i class="fas fa-arrow-circle-right"></i
+            ></a>
           </div>
         </div>
         <div class="col-lg-3 col-6">
@@ -55,19 +58,23 @@
             <div class="icon">
               <i class="fas fa-shopping-cart"></i>
             </div>
-            <a href="/transaction" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/transaction" class="small-box-footer"
+              >More info <i class="fas fa-arrow-circle-right"></i
+            ></a>
           </div>
         </div>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3><%= categories %> </h3>
+              <h3><%= categories %></h3>
               <p>Categories</p>
             </div>
             <div class="icon">
               <i class="fas fa-th-large"></i>
             </div>
-            <a href="/category" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/category" class="small-box-footer"
+              >More info <i class="fas fa-arrow-circle-right"></i
+            ></a>
           </div>
         </div>
       </div>
@@ -75,5 +82,4 @@
   </section>
 </div>
 
-<%- include ../../partials/footer.ejs %> 
-<%- include ../../partials/js.ejs %>
+<%- include ../../partials/footer.ejs %> <%- include ../../partials/js.ejs %>
