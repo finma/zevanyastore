@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index page matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      Index
+    </div>
+    <button
+      class="p-2"
+    >
+      Click me!
+    </button>
+  </div>
+</DocumentFragment>
+`;

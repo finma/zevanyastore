@@ -1,0 +1,118 @@
+/* FONTS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Favfont";
+    src: local("Calibre-Regular"), local("Calibre-Regular"), url("Calibre-Regular.woff2") format("woff2"),
+      url("Calibre-Regular.woff") format("woff"), url("Calibre-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+/* INPUT PAYMENT */
+
+.payment input[type="radio"]:checked + .detail-payment {
+  border: 2px solid black;
+  --tw-bg-opacity: 1;
+  background-color: rgba(250, 175, 0, var(--tw-bg-opacity));
+}
+
+/* HERO SECTION */
+
+.__hero-section {
+  display: flex;
+  justify-content: center;
+}
+
+.__container {
+  margin-top: 25px;
+  width: 100%;
+  max-width: 1290px;
+  background: center center/cover no-repeat;
+  height: 550px;
+  object-fit: contain;
+  animation: animate 10s infinite;
+  border-radius: 20px;
+  margin-bottom: 70px;
+}
+
+.__menu-container {
+  font-family: "Playfair Display", serif;
+}
+
+.__menu-container > h1 {
+  font-size: 65px;
+  margin-left: 25px;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 170px;
+  text-shadow: 0px 2px 6px rgb(0, 0, 0, 25%);
+}
+
+.__menu-container #zcxjk23 {
+  margin-top: -10px;
+}
+
+@media screen and (max-width: 960px) {
+  .__container {
+    transform: scale(90%);
+    margin-top: 0px;
+  }
+
+  .__menu-container > h1 {
+    font-size: 42px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .__menu-container > h1 {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .__container {
+    max-width: 935px !important;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .__container {
+    max-width: 1115px;
+  }
+}
+
+@keyframes animate {
+  0%,
+  100% {
+    background-image: url("/img/banner-1.jpg");
+  }
+  50% {
+    background-image: url("/img/banner-2.jpg");
+  }
+  25% {
+    background-image: url("/img/banner-3.jpg");
+  }
+}
+
+/* SCROLLBAR */
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffdbcc;
+}
+
+body::-webkit-scrollbar {
+  width: 12px;
+  background-color: #ffdbcc;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #fcb9aa;
+}
