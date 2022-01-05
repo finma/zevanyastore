@@ -42,7 +42,7 @@ export const createTransaction = async (req, res) => {
     const payload = {
       historyProduct: {
         name: product._doc.name,
-        category: product._doc.category,
+        category: category._doc.name,
         stock: product._doc.stock,
         price: product._doc.price,
         description: product._doc.description,

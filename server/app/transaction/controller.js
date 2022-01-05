@@ -8,9 +8,14 @@ export const index = async (req, res) => {
     const alertStatus = req.flash("alertStatus");
     const alert = { message: alertMessage, status: alertStatus };
 
+    const transactions = await Transaction.find();
+
+    console.log(transactions);
+
     res.render("admin/transaction/view_transaction", {
       title: "Transaction",
       name: req.session.user.name,
+      transactions,
       pageName,
       alert,
     });

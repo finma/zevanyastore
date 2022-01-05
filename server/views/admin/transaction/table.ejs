@@ -12,33 +12,49 @@
     </tr>
   </thead>
   <tbody>
-    <% for( let i = 0; i < products.length; i++ ) { %>
+    <% for( let i = 0; i < transactions.length; i++ ) { %>
     <tr>
       <td><%= i + 1 %></td>
-      <td><%= products[i].name %></td>
-      <td><%= products[i].category.name %></td>
-      <td><%= products[i].stock %></td>
+      <td><%= transactions[i].historyProduct.name %></td>
+      <td><%= transactions[i].historyProduct.category %></td>
+      <td><%= transactions[i].totalItem %></td>
       <td>
         <%= new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR'
-        }).format(products[i].price) %>
+        }).format(transactions[i].totalPrice) %>
+      </td>
+      <td><%= transactions[i].historyCustomer.name %></td>
+      <td>
+        <% if(transactions[i].status === 'pending' ) { %>
+        <span class="badge badge-warning"><%= transactions[i].status %></span>
+        <% } else if(transactions[i].status === 'success' ) { %>
+        <span class="badge badge-success"><%= transactions[i].status %></span>
+        <% } else { %>
+        <span class="badge badge-danger"><%= transactions[i].status %></span>
+        <%} %>
       </td>
       <td>
+        <% if (transactions[i].status === 'pending') { %>
         <form
-          action="/product/delete/<%= products[i]._id %>?_method=DELETE"
+          style="display: inline-block"
+          action="/transaction/status/<%= transactions[i]._id %>?status=failed&_method=PUT"
           method="POST"
         >
-          <a
-            href="/product/edit/<%= products[i]._id %> "
-            class="btn btn-info btn-sm"
-          >
-            <i class="fas fa-pencil-alt"></i>
-            Edit
-          </a>
-          <button class="btn btn-danger btn-sm">
-            <i class="fas fa-trash"></i>
-            Delete
+          <button class="btn btn-danger btn-sm" type="submit">
+            <i class="fas fa-times-circle"></i>
+            Reject
           </button>
         </form>
+        <form
+          style="display: inline-block"
+          action="/transaction/status/<%= transactions[i]._id %>?status=success&_method=PUT"
+          method="POST"
+        >
+          <button class="btn btn-success btn-sm" type="submit">
+            <i class="fas fa-check"></i>
+            Accept
+          </button>
+        </form>
+        <% } %>
       </td>
     </tr>
     <% } %>
