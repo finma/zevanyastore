@@ -13,6 +13,7 @@ import userRouter from "./app/user/router";
 import dashboardRouter from "./app/dashboard/router";
 import categoryRouter from "./app/category/router";
 import productRouter from "./app/product/router";
+import productRouterAPI from "./app/product/router.api";
 import paymentRouter from "./app/payment/router";
 import transactionRouter from "./app/transaction/router";
 import authRouter from "./app/auth/router";
@@ -58,6 +59,7 @@ app.use("/transaction", transactionRouter);
 //? API
 app.use("/api/auth", authRouter);
 app.use("/api/checkout", customerRouter);
+app.use("/api/product", productRouterAPI);
 
 //! catch 404 and forward to error handler
 app.use(function (req, res, next) {

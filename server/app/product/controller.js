@@ -221,3 +221,40 @@ export const actionDelete = async (req, res) => {
     res.redirect("/product");
   }
 };
+
+//? API
+export const getProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+
+    res
+      .status(200)
+      .json({ error: 0, message: "success get products", data: { products } });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 1, message: error.message || "Internal server error" });
+  }
+};
+
+export const getDetailProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findOne({ _id: id }).populate("category");
+
+    if (!product) {
+      return res.status(404).json({ error: 1, message: "Product not found" });
+    }
+
+    res.status(200).json({
+      error: 0,
+      message: "success get detail product",
+      data: { product },
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 1, message: error.message || "Internal server error" });
+  }
+};
