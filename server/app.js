@@ -9,17 +9,21 @@ import methodOverride from "method-override";
 import flash from "connect-flash";
 import session from "express-session";
 
+//? WEB
 import userRouter from "./app/user/router";
 import dashboardRouter from "./app/dashboard/router";
 import categoryRouter from "./app/category/router";
-import categoryRouterAPI from "./app/category/router.api";
 import productRouter from "./app/product/router";
-import productRouterAPI from "./app/product/router.api";
 import paymentRouter from "./app/payment/router";
-import paymentRouterAPI from "./app/payment/router.api";
 import transactionRouter from "./app/transaction/router";
 import authRouter from "./app/auth/router";
 import customerRouter from "./app/customer/router";
+
+//? API
+import categoryRouterAPI from "./app/category/router.api";
+import productRouterAPI from "./app/product/router.api";
+import paymentRouterAPI from "./app/payment/router.api";
+import transactionRouterAPI from "./app/transaction/router.api";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -51,6 +55,7 @@ app.use(
   express.static(path.join(__dirname, "/node_modules/admin-lte"))
 );
 
+//? WEB
 app.use("/", userRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/category", categoryRouter);
@@ -64,6 +69,7 @@ app.use("/api/checkout", customerRouter);
 app.use("/api/product", productRouterAPI);
 app.use("/api/category", categoryRouterAPI);
 app.use("/api/payment", paymentRouterAPI);
+app.use("/api/transaction", transactionRouterAPI);
 
 //! catch 404 and forward to error handler
 app.use(function (req, res, next) {
