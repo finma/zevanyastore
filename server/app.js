@@ -9,7 +9,8 @@ import methodOverride from "method-override";
 import flash from "connect-flash";
 import session from "express-session";
 
-import indexRouter from "./app/dashboard/router";
+import userRouter from "./app/user/router";
+import dashboardRouter from "./app/dashboard/router";
 import categoryRouter from "./app/category/router";
 import productRouter from "./app/product/router";
 import paymentRouter from "./app/payment/router";
@@ -44,7 +45,8 @@ app.use(
   express.static(path.join(__dirname, "/node_modules/admin-lte"))
 );
 
-app.use("/", indexRouter);
+app.use("/", userRouter);
+app.use("/dashboard", dashboardRouter);
 app.use("/category", categoryRouter);
 app.use("/product", productRouter);
 app.use("/payment", paymentRouter);

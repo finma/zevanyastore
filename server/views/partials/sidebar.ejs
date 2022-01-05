@@ -12,9 +12,10 @@
         data-accordion="false"
       >
         <li class="nav-item">
-          <a href="/" class="nav-link <% if (pageName === 'home') { %>
-            active
-          <% } %>">
+          <a
+            href="/dashboard"
+            class="nav-link <% if (pageName === 'home') { %> active <% } %>"
+          >
             <i class="nav-icon fas fa-home"></i>
             <p>Home</p>
           </a>
@@ -22,17 +23,19 @@
         <li class="nav-header">Master</li>
 
         <li class="nav-item">
-          <a href="/category" class="nav-link <% if (pageName === 'category') { %>
-            active
-          <% } %>">
+          <a
+            href="/category"
+            class="nav-link <% if (pageName === 'category') { %> active <% } %>"
+          >
             <i class="nav-icon far fa-calendar-alt"></i>
             <p>Category</p>
           </a>
         </li>
-        <li class="nav-item ">
-          <a href="/product" class="nav-link <% if (pageName === 'product') { %>
-            active
-          <% } %>">
+        <li class="nav-item">
+          <a
+            href="/product"
+            class="nav-link <% if (pageName === 'product') { %> active <% } %>"
+          >
             <i class="nav-icon fas fa-boxes"></i>
             <p>Product</p>
           </a>
@@ -41,9 +44,10 @@
         <li class="nav-header">Payment Method</li>
 
         <li class="nav-item">
-          <a href="/payment" class="nav-link <% if (pageName === 'payment') { %>
-            active
-          <% } %>">
+          <a
+            href="/payment"
+            class="nav-link <% if (pageName === 'payment') { %> active <% } %>"
+          >
             <i class="nav-icon fas fa-money-check-alt"></i>
             <p>Payment</p>
           </a>
@@ -51,9 +55,23 @@
         <li class="nav-header">Transaction</li>
 
         <li class="nav-item">
-          <a href="/transaction" class="nav-link <% if (pageName === 'transaction') { %>
-            active
-          <% } %>">
+          <a
+            href="/transaction"
+            class="
+              nav-link
+              <%
+              if
+              (pageName
+              ===
+              'transaction')
+              {
+              %>
+              active
+              <%
+              }
+              %>
+            "
+          >
             <i class="nav-icon fas fa-shopping-cart"></i>
             <p>Transaction</p>
           </a>

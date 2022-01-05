@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { isLoginAdmin } from "../middleware/auth";
 import {
   index,
   viewCreate,
@@ -10,6 +11,7 @@ import {
 
 const router = Router();
 
+router.use(isLoginAdmin);
 router.get("/", index);
 router.get("/create", viewCreate);
 router.post("/create", actionCreate);
