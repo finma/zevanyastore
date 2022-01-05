@@ -112,3 +112,20 @@ export const actionDelete = async (req, res) => {
     res.redirect("/payment");
   }
 };
+
+//? API
+export const getPayments = async (req, res) => {
+  try {
+    const payments = await Payment.find();
+
+    res.status(200).json({
+      error: 0,
+      message: "success get payments",
+      data: { payments },
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 1, message: error.message || "Internal server error" });
+  }
+};

@@ -16,6 +16,7 @@ import categoryRouterAPI from "./app/category/router.api";
 import productRouter from "./app/product/router";
 import productRouterAPI from "./app/product/router.api";
 import paymentRouter from "./app/payment/router";
+import paymentRouterAPI from "./app/payment/router.api";
 import transactionRouter from "./app/transaction/router";
 import authRouter from "./app/auth/router";
 import customerRouter from "./app/customer/router";
@@ -62,6 +63,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/checkout", customerRouter);
 app.use("/api/product", productRouterAPI);
 app.use("/api/category", categoryRouterAPI);
+app.use("/api/payment", paymentRouterAPI);
 
 //! catch 404 and forward to error handler
 app.use(function (req, res, next) {
