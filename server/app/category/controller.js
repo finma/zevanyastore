@@ -110,3 +110,22 @@ export const actionDelete = async (req, res) => {
     res.redirect("/category");
   }
 };
+
+//? API
+export const getCategories = async (req, res) => {
+  try {
+    const categories = await Category.find();
+
+    res
+      .status(200)
+      .json({
+        error: 0,
+        message: "success get categories",
+        data: { categories },
+      });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 1, message: error.message || "Internal server error" });
+  }
+};

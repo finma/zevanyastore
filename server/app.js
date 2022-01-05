@@ -12,6 +12,7 @@ import session from "express-session";
 import userRouter from "./app/user/router";
 import dashboardRouter from "./app/dashboard/router";
 import categoryRouter from "./app/category/router";
+import categoryRouterAPI from "./app/category/router.api";
 import productRouter from "./app/product/router";
 import productRouterAPI from "./app/product/router.api";
 import paymentRouter from "./app/payment/router";
@@ -60,6 +61,7 @@ app.use("/transaction", transactionRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/checkout", customerRouter);
 app.use("/api/product", productRouterAPI);
+app.use("/api/category", categoryRouterAPI);
 
 //! catch 404 and forward to error handler
 app.use(function (req, res, next) {
