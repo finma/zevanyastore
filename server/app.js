@@ -16,6 +16,7 @@ import productRouter from "./app/product/router";
 import paymentRouter from "./app/payment/router";
 import transactionRouter from "./app/transaction/router";
 import authRouter from "./app/auth/router";
+import customerRouter from "./app/customer/router";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -56,6 +57,7 @@ app.use("/transaction", transactionRouter);
 
 //? API
 app.use("/api/auth", authRouter);
+app.use("/api/checkout", customerRouter);
 
 //! catch 404 and forward to error handler
 app.use(function (req, res, next) {
