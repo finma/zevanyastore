@@ -16,6 +16,7 @@ export const index = async (req, res) => {
 
     res.render("admin/product/view_product", {
       title: "Product",
+      name: req.session.user.name,
       products,
       pageName,
       alert,
@@ -33,6 +34,7 @@ export const viewCreate = async (req, res) => {
 
     res.render("admin/product/create", {
       title: "Create Product",
+      name: req.session.user.name,
       categories,
       pageName,
     });
@@ -116,6 +118,7 @@ export const viewEdit = async (req, res) => {
 
     res.render("admin/product/edit", {
       title: "Update Product",
+      name: req.session.user.name,
       product,
       categories,
       pageName,

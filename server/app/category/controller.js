@@ -15,6 +15,7 @@ export const index = async (req, res) => {
       categories,
       pageName,
       alert,
+      name: req.session.user.name,
     });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
@@ -25,7 +26,11 @@ export const index = async (req, res) => {
 
 export const viewCreate = async (req, res) => {
   try {
-    res.render("admin/category/create", { title: "Create Category", pageName });
+    res.render("admin/category/create", {
+      title: "Create Category",
+      name: req.session.user.name,
+      pageName,
+    });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
@@ -60,6 +65,7 @@ export const viewEdit = async (req, res) => {
 
     res.render("admin/category/edit", {
       title: "Edit Category",
+      name: req.session.user.name,
       category,
       pageName,
     });

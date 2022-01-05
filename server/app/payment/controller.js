@@ -12,6 +12,7 @@ export const index = async (req, res) => {
 
     res.render("admin/payment/view_payment", {
       title: "Payment",
+      name: req.session.user.name,
       payments,
       pageName,
       alert,
@@ -25,7 +26,11 @@ export const index = async (req, res) => {
 
 export const viewCreate = async (req, res) => {
   try {
-    res.render("admin/payment/create", { title: "Create Payment", pageName });
+    res.render("admin/payment/create", {
+      title: "Create Payment",
+      name: req.session.user.name,
+      pageName,
+    });
   } catch (error) {
     req.flash("alertMessage", `${error.message}`);
     req.flash("alertStatus", "danger");
@@ -59,6 +64,7 @@ export const viewEdit = async (req, res) => {
 
     res.render("admin/payment/edit", {
       title: "Update Payment",
+      name: req.session.user.name,
       payment,
       pageName,
     });

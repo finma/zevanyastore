@@ -64,3 +64,8 @@ export const actionSignin = async (req, res) => {
     res.redirect("/");
   }
 };
+
+export const actionLogout = async (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+};

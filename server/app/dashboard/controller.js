@@ -13,6 +13,7 @@ export const index = async (req, res) => {
       categories,
       products,
       pageName,
+      name: req.session.user.name,
     });
   } catch (error) {
     console.log(error);
