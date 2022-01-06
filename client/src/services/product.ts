@@ -29,11 +29,11 @@ export const getProductsBySearch = async (query: string | string[] | undefined, 
   return res.data;
 };
 
-export const getProductDetail = async (slug: any) => {
-  const url = `${ROOT_API}/products/${slug}/detail`;
+export const getProductDetail = async (id: any) => {
+  const url = `${ROOT_API}/product/detail/${id}`;
   const res = await axios({ url, method: "GET" }).catch((err: { response: any }) => {
     return err.response;
   });
 
-  return res.data;
+  return res.data.data;
 };

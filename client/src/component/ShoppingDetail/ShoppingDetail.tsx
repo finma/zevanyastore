@@ -31,7 +31,7 @@ export const ShoppingDetail = (props: { product: any }) => {
   const getPaymentList = useCallback(async () => {
     const res = await getPayments();
 
-    setPayments(res.data);
+    setPayments(res.payments);
   }, []);
 
   useEffect(() => {
@@ -72,11 +72,11 @@ export const ShoppingDetail = (props: { product: any }) => {
       const newAddress = { address, city, province, postcode };
       const data = {
         transaction: {
-          product_id: product.id,
-          payment_id: paymentId,
-          total_item: counter,
-          total_price: price,
-          category_id: product.category_id,
+          productID: product.id,
+          paymentID: paymentId,
+          categoryID: product.category_id,
+          totalItem: counter,
+          totalPrice: price,
         },
         product,
         address: newAddress,
@@ -141,7 +141,7 @@ export const ShoppingDetail = (props: { product: any }) => {
         {payments.map((item: PaymentTypes) => {
           return (
             <PaymentItem
-              key={item.id}
+              key={item._id}
               payment={item}
               onChange={() => {
                 return handlePaymentChange(item);

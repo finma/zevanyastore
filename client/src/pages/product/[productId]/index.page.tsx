@@ -1,9 +1,9 @@
-import type { GetServerSideProps } from "next";
+/* eslint-disable tailwindcss/no-custom-classname */
 import Image from "next/image";
 import { ProductDetail } from "src/component/ShoppingDetail/ProductDetail";
 import { ShoppingDetail } from "src/component/ShoppingDetail/ShoppingDetail";
 import { FluidLayout } from "src/layout";
-import { getProductDetail } from "src/services/product";
+import { getProductDetail, getProducts } from "src/services/product";
 import type { ProductTypes } from "src/type/types";
 
 const Index = (props: { product: ProductTypes }) => {
@@ -39,16 +39,37 @@ const Index = (props: { product: ProductTypes }) => {
   );
 };
 
-Index.getLayout = FluidLayout;
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const res = await getProductDetail(params?.productId);
+export const getStaticPaths = async () => {
+  const { products } = await getProducts();
+  const paths = products.map((product: ProductTypes) => {
+    return {
+      params: {
+        productId: product._id,
+      },
+    };
+  });
 
   return {
-    props: {
-      product: res.data,
-    },
+    paths,
+    fallback: false,
   };
 };
+
+interface GetStaticProps {
+  params: {
+    productId: string;
+  };
+}
+
+export const getStaticProps = async ({ params }: GetStaticProps) => {
+  const { productId } = params;
+  const { product } = await getProductDetail(productId);
+
+  return {
+    props: { product },
+  };
+};
+
+Index.getLayout = FluidLayout;
 
 export default Index;

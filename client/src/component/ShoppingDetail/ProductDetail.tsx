@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import Rating from "@mui/material/Rating";
 import Link from "next/link";
 import ReactHtmlParser from "react-html-parser";
