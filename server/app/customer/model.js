@@ -15,12 +15,12 @@ const customerSchema = mongoose.Schema(
       maxlength: 255,
       minlength: 3,
     },
-    username: {
-      type: String,
-      require: true,
-      maxlength: 255,
-      minlength: 3,
-    },
+    // username: {
+    //   type: String,
+    //   require: true,
+    //   maxlength: 255,
+    //   minlength: 3,
+    // },
     password: {
       type: String,
       require: true,

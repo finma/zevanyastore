@@ -42,7 +42,6 @@ export const signin = async (req, res, next) => {
             customer: {
               id: customer._id,
               email: customer.email,
-              username: customer.username,
               name: customer.name,
               phoneNumber: customer.phoneNumber,
             },
@@ -65,5 +64,25 @@ export const signin = async (req, res, next) => {
       .json({ error: 1, message: error.message || "Internal server error" });
 
     next();
+  }
+};
+
+export const getUser = async (req, res) => {
+  try {
+    const token = req.headers.authorization
+      ? req.headers.authorization.replace("Bearer ", "")
+      : null;
+
+    const data = jwt.verify(token, JWT_KEY);
+
+    const customer = await Customer.findOne({ _id: data.customer.id });
+
+    res.status(201).json({
+      error: 0,
+      message: "success get user",
+      data: { name: customer.name },
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Internal server error" });
   }
 };
