@@ -3,8 +3,8 @@ import axios from "axios";
 
 const ROOT_API = `${process.env.NEXT_PUBLIC_API}`;
 
-export const setRegister = async (data: FormData) => {
-  const url = `${ROOT_API}/register`;
+export const setRegister = async (data: any) => {
+  const url = `${ROOT_API}/auth/signup`;
   const res = await axios({ url, method: "POST", data }).catch((err: { response: any }) => {
     return err.response;
   });
@@ -12,8 +12,8 @@ export const setRegister = async (data: FormData) => {
   return res.data;
 };
 
-export const setLogin = async (data: FormData) => {
-  const url = `${ROOT_API}/login`;
+export const setLogin = async (data: any) => {
+  const url = `${ROOT_API}/auth/signin`;
   const res = await axios({ url, method: "POST", data }).catch((err: { response: any }) => {
     return err.response;
   });

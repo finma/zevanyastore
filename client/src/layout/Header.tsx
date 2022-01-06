@@ -3,9 +3,9 @@ import cx from "classnames";
 import type { VFC } from "react";
 import { useEffect, useState } from "react";
 
+import { Auth } from "../component/Navbar/Auth";
 import { Logo } from "../component/Navbar/Logo";
 import { SearchInput } from "../component/Navbar/SearchInput";
-import { Tooltip } from "../component/Navbar/Tooltip";
 
 /**
  * @package
@@ -38,7 +38,7 @@ export const Header: VFC = () => {
       <div className=" container flex py-3 m-auto w-full">
         <Logo color={color} />
         <SearchInput />
-        <Tooltip />
+        <Auth />
       </div>
     </div>
   );

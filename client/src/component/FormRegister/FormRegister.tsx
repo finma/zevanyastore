@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable react/jsx-handler-names */
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -20,32 +21,43 @@ const Toast = Swal.mixin({
 export const FormRegister = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
 
   const router = useRouter();
 
   const handleSubmit = async () => {
-    const data = new FormData();
+    const data = { name, email, phoneNumber, password };
 
-    data.append("name", name);
-    data.append("email", email);
-    data.append("password", password);
+    if (!name || !email || !phoneNumber || !password) {
+      Toast.fire({
+        icon: "error",
+        title: "Harap isi data dengan benar!",
+      });
+    } else {
+      const result = await setRegister(data);
 
-    await setRegister(data);
+      if (result.error) {
+        Toast.fire({
+          icon: "error",
+          title: result.message,
+        });
+      } else {
+        router.push("/login");
 
-    router.push("/login");
-
-    Toast.fire({
-      icon: "success",
-      title: "Berhasil membuat akun!",
-    });
+        Toast.fire({
+          icon: "success",
+          title: "Berhasil membuat akun!",
+        });
+      }
+    }
   };
 
   return (
     <div className="flex flex-col py-8 px-4 sm:px-6 md:px-8 lg:px-10 w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow">
       <div className="self-center text-xl sm:text-2xl font-light text-gray-600 dark:text-white">Daftar Akun</div>
       <div className="mt-8">
-        <form>
+        <div>
           <div className="flex flex-col mb-2">
             <div className=" flex relative">
               <span className="inline-flex items-center px-3 text-sm text-gray-700 bg-white rounded-l-md border-t border-b border-l border-gray-300 shadow-sm">
@@ -61,7 +73,7 @@ export const FormRegister = () => {
                 onChange={(e) => {
                   return setName(e.target.value);
                 }}
-                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent focus:ring-yellow-star shadow-sm appearance-none focus:outline-none"
+                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent shadow-sm appearance-none focus:outline-none focus:ring-yellow-star"
                 placeholder="Nama"
                 required
               />
@@ -88,8 +100,29 @@ export const FormRegister = () => {
                 onChange={(e) => {
                   return setEmail(e.target.value);
                 }}
-                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent focus:ring-yellow-star shadow-sm appearance-none focus:outline-none"
+                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent shadow-sm appearance-none focus:outline-none focus:ring-yellow-star"
                 placeholder="Email"
+                required
+              />
+            </div>
+          </div>
+          <div className="flex flex-col mb-2">
+            <div className=" flex relative">
+              <span className="inline-flex items-center px-3 text-sm text-gray-700 bg-white rounded-l-md border-t border-b border-l border-gray-300 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                </svg>
+              </span>
+              <input
+                type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={phoneNumber}
+                onChange={(e) => {
+                  return setPhoneNumber(e.target.value);
+                }}
+                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent shadow-sm appearance-none focus:outline-none focus:ring-yellow-star"
+                placeholder="Nomor Handphone"
                 required
               />
             </div>
@@ -115,7 +148,7 @@ export const FormRegister = () => {
                 onChange={(e) => {
                   return setPassword(e.target.value);
                 }}
-                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent focus:ring-yellow-star shadow-sm appearance-none focus:outline-none"
+                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent shadow-sm appearance-none focus:outline-none focus:ring-yellow-star"
                 placeholder="Password"
                 required
               />
@@ -125,12 +158,12 @@ export const FormRegister = () => {
             <button
               onClick={handleSubmit}
               type="submit"
-              className=" py-2 px-4 w-full text-base font-semibold text-center text-black bg-yellow-star rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none"
+              className=" py-2 px-4 w-full text-base font-semibold text-center text-black rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none bg-yellow-star"
             >
               Daftar
             </button>
           </div>
-        </form>
+        </div>
       </div>
       <div className="flex justify-center items-center mt-6">
         <Link href="/login">

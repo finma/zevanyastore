@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable react/jsx-handler-names */
 import Cookies from "js-cookie";
 import Link from "next/link";
@@ -26,32 +27,34 @@ export const FormLogin = () => {
   const router = useRouter();
 
   const handleLogin = async () => {
-    const data = new FormData();
+    const data = { email, password };
 
-    data.append("email", email);
-    data.append("password", password);
-
-    const result = await setLogin(data);
-
-    if (result.status === "error") {
+    if (!email || !password) {
       Toast.fire({
         icon: "error",
-        title: "Isi data dengan benar!",
+        title: "Email dan Password wajib diisi!",
       });
     } else {
-      const token = `${result.content.token_type} ${result.content.access_token}`;
-      const tokenBase64 = Buffer.from(token, "binary").toString("base64");
+      const result = await setLogin(data);
 
-      const user = await getUser(token);
+      if (result.error) {
+        Toast.fire({
+          icon: "error",
+          title: result.message,
+        });
+      } else {
+        const tokenBase64 = Buffer.from(result.data.token, "binary").toString("base64");
+        const user = await getUser(result.data.token);
 
-      Cookies.set("token", tokenBase64);
-      Cookies.set("user", JSON.stringify(user.data));
-      router.push("/");
+        Cookies.set("token", tokenBase64);
+        Cookies.set("user", JSON.stringify(user.data.name));
+        router.push("/");
 
-      Toast.fire({
-        icon: "success",
-        title: "Berhasil login!",
-      });
+        Toast.fire({
+          icon: "success",
+          title: "Berhasil login!",
+        });
+      }
     }
   };
 
@@ -59,7 +62,7 @@ export const FormLogin = () => {
     <div className="flex flex-col py-8 px-4 sm:px-6 md:px-8 lg:px-10 w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow">
       <div className="self-center text-xl sm:text-2xl font-light text-gray-600 dark:text-white">Login</div>
       <div className="mt-8">
-        <form action="#" autoComplete="off">
+        <div>
           <div className="flex flex-col mb-2">
             <div className=" flex relative">
               <span className="inline-flex items-center px-3 text-sm text-gray-700 bg-white rounded-l-md border-t border-b border-l border-gray-300 shadow-sm">
@@ -81,7 +84,7 @@ export const FormLogin = () => {
                 onChange={(e) => {
                   return setEmail(e.target.value);
                 }}
-                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent focus:ring-yellow-star shadow-sm appearance-none focus:outline-none"
+                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent shadow-sm appearance-none focus:outline-none focus:ring-yellow-star"
                 placeholder="Email"
                 required
               />
@@ -108,7 +111,7 @@ export const FormLogin = () => {
                   return setPassword(e.target.value);
                 }}
                 value={password}
-                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent focus:ring-[#faaf00] shadow-sm appearance-none focus:outline-none"
+                className=" flex-1 py-2 px-4 w-full text-base placeholder-gray-400 text-gray-700 bg-white rounded-r-lg border border-gray-300 focus:border-transparent shadow-sm appearance-none focus:outline-none focus:ring-[#faaf00]"
                 placeholder="Password"
                 required
               />
@@ -127,12 +130,12 @@ export const FormLogin = () => {
             <button
               type="submit"
               onClick={handleLogin}
-              className=" py-2 px-4 w-full text-base font-semibold text-center text-black bg-[#faaf00] rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none"
+              className=" py-2 px-4 w-full text-base font-semibold text-center text-black rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none bg-[#faaf00]"
             >
               Login
             </button>
           </div>
-        </form>
+        </div>
       </div>
       <div className="flex justify-center items-center mt-6">
         <Link href="/register">
