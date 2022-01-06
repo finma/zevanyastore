@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import Rating from "@mui/material/Rating";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,13 +10,13 @@ interface CardProps {
 }
 
 export const Card = (props: CardProps) => {
-  const { name, price, image, slug } = props.product;
+  const { _id, name, price, image } = props.product;
   const API_IMG = process.env.NEXT_PUBLIC_IMG;
   const src = `${API_IMG}/${image}`;
 
   return (
-    <div className=" mx-4 mb-8 w-[200px] rounded-2xl">
-      <Link href={`/product/${slug}`}>
+    <div className=" mx-4 mb-8 rounded-2xl w-[200px]">
+      <Link href={`/product/${_id}`}>
         <a>
           <div className="m-auto w-full rounded-lg">
             <Image

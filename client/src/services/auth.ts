@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from "axios";
 
-const ROOT_API = `${process.env.NEXT_PUBLIC_API}/api`;
+const ROOT_API = `${process.env.NEXT_PUBLIC_API}`;
 
 export const setRegister = async (data: FormData) => {
   const url = `${ROOT_API}/register`;

@@ -16,8 +16,8 @@ const nextConfig = {
     domains: ["*"],
   },
   env: {
-    NEXT_PUBLIC_API: "http://online-shop.test",
-    NEXT_PUBLIC_IMG: "http://online-shop.test/storage",
+    NEXT_PUBLIC_API: "http://localhost:3001/api",
+    NEXT_PUBLIC_IMG: "http://localhost:3001/uploads",
   },
 };
 

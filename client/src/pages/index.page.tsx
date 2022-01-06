@@ -15,17 +15,17 @@ interface IndexProps {
 }
 
 const Index = (props: IndexProps) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState<Array<ProductTypes>>([]);
-  const [categories, setCategories] = useState<Array<CategoryTypes>>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [products, setProducts] = useState<Array<ProductTypes>>([]);
+  // const [categories, setCategories] = useState<Array<CategoryTypes>>([]);
 
-  useEffect(() => {
-    if (props.products) {
-      setProducts(props.products);
-      setCategories(props.categories);
-      setIsLoading(false);
-    }
-  }, [props.categories, props.products]);
+  // useEffect(() => {
+  //   if (props.products) {
+  //     setProducts(props.products);
+  //     setCategories(props.categories);
+  //     setIsLoading(false);
+  //   }
+  // }, [props.categories, props.products]);
 
   return (
     <>
@@ -36,25 +36,27 @@ const Index = (props: IndexProps) => {
         </div>
       ) : (
         <>
-          <Category categories={categories} />
-          <Products products={products} />
+          <Category />
+          <Products />
+          {/* <Category categories={categories} />
+          <Products products={products} /> */}
         </>
       )}
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const products = await getProducts();
-  const categories = await getCategories();
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const products = await getProducts();
+//   const categories = await getCategories();
 
-  return {
-    props: {
-      products: products.data.data,
-      categories: categories.data,
-    },
-  };
-};
+//   return {
+//     props: {
+//       products: products.data.data,
+//       categories: categories.data,
+//     },
+//   };
+// };
 
 Index.getLayout = FluidLayout;
 

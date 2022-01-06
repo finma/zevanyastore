@@ -5,49 +5,39 @@ export interface UserTypes {
 }
 
 export interface ProductTypes {
-  category_id: number;
-  created_at: string;
   description: string;
-  id: number;
+  _id: string;
   image: string;
   name: string;
   price: number;
-  slug: string;
   stock: number;
   updated_at: string;
   category: CategoryTypes;
-  quantity?: number;
 }
 
 export interface PaymentTypes {
-  bank_name: string;
-  created_at: string;
-  id: number;
+  bankName: string;
+  _id: string;
   name: string;
-  no_rekening: string;
-  slug: string;
+  noRekening: string;
   type: string;
-  updated_at: string;
 }
 
 export interface CategoryTypes {
-  id: number;
+  _id: string;
   name: string;
-  slug: string;
 }
 
 export interface TransactionTypes {
-  product: ProductTypes;
-  category: CategoryTypes;
-  id: number;
-  product_id?: number;
-  payment_id?: number;
-  slug?: string;
-  total_item: number;
-  total_price: number;
+  historyProduct: ProductTypes;
+  historyPayment: PaymentTypes;
+  historyCustomer: UserTypes;
+  category: string;
+  _id: string;
+  totalItem: number;
+  totalPrice: number;
   customer?: string;
   status: string;
-  payment: PaymentTypes;
 }
 
 export interface CheckoutTypes {

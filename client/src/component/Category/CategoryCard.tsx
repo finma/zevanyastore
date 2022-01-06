@@ -8,7 +8,7 @@ export const CategoryCard = (props: { label: string }) => {
   return (
     <Link href={`/product?category=${label}`}>
       <a>
-        <div className="w-[200px] h-[250px] rounded-lg shadow-md">
+        <div className="rounded-lg shadow-md w-[200px] h-[250px]">
           <div className="flex relative justify-center items-center w-full">
             <h3 className="absolute z-10 py-2 px-6 text-xl font-medium text-center text-gray-700 capitalize bg-white rounded-r-full rounded-l-full shadow-md">
               {label}
