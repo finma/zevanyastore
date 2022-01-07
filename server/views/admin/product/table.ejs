@@ -14,7 +14,7 @@
     <tr>
       <td><%= i + 1 %></td>
       <td><%= products[i].name %></td>
-      <td><%= products[i].category.name %></td>
+      <td><%= products[i].category %></td>
       <td><%= products[i].stock %></td>
       <td>
         <%= new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR'

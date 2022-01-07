@@ -12,7 +12,7 @@ export const index = async (req, res) => {
     const alertStatus = req.flash("alertStatus");
     const alert = { message: alertMessage, status: alertStatus };
 
-    const products = await Product.find().populate("category");
+    const products = await Product.find();
 
     res.render("admin/product/view_product", {
       title: "Product",
@@ -251,6 +251,49 @@ export const getDetailProduct = async (req, res) => {
       error: 0,
       message: "success get detail product",
       data: { product },
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 1, message: error.message || "Internal server error" });
+  }
+};
+
+export const getProductsBySearch = async (req, res) => {
+  try {
+    const { keyword } = req.query;
+
+    const criteria = {
+      $or: [
+        {
+          name: {
+            $regex: `${keyword}`,
+            $options: "i",
+          },
+        },
+        {
+          category: {
+            $regex: `${keyword}`,
+            $options: "i",
+          },
+        },
+      ],
+    };
+
+    const products = await Product.aggregate([
+      {
+        $match: criteria,
+      },
+    ]);
+
+    if (products.length === 0) {
+      return res.status(404).json({ error: 1, message: "Product not found" });
+    }
+
+    res.status(200).json({
+      error: 0,
+      message: "success get products",
+      data: { products },
     });
   } catch (error) {
     res
