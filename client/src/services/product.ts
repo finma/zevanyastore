@@ -20,8 +20,8 @@ export const getProductsByCategory = async (category: string | string[] | undefi
   return res.data;
 };
 
-export const getProductsBySearch = async (query: string | string[] | undefined, page?: number) => {
-  const url = `${ROOT_API}/products?search=${query}&page=${page}`;
+export const getProductsBySearch = async (query: any) => {
+  const url = `${ROOT_API}/product/search?keyword=${query}`;
   const res = await axios({ url, method: "GET" }).catch((err: { response: any }) => {
     return err.response;
   });

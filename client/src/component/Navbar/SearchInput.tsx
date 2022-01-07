@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable react/jsx-handler-names */
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -11,7 +12,10 @@ export const SearchInput = () => {
   };
 
   const handleSearch = () => {
-    router.push(`/product?search=${query}`);
+    router.push({
+      pathname: "/product",
+      query: { search: query.toLocaleLowerCase() },
+    });
   };
 
   return (
@@ -19,7 +23,7 @@ export const SearchInput = () => {
       <div className=" flex relative items-center w-3/5">
         <button
           onClick={handleSearch}
-          className="flex absolute justify-center items-center ml-1 w-8 h-8 text-white bg-pastel-pink-light rounded-full"
+          className="flex absolute justify-center items-center ml-1 w-8 h-8 text-white rounded-full bg-pastel-pink-light"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

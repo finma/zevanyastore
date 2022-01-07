@@ -1,30 +1,34 @@
-import type { GetServerSideProps } from "next";
+/* eslint-disable tailwindcss/no-custom-classname */
+/* eslint-disable @typescript-eslint/naming-convention */
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
 import ReactLoading from "react-loading";
 import { Products } from "src/component/Products/Products";
 import { FluidLayout } from "src/layout";
-import { getProductsByCategory, getProductsBySearch } from "src/services/product";
+import { getProductsBySearch } from "src/services/product";
 import type { ProductTypes } from "src/type/types";
 
-interface IndexProps {
-  products: Array<ProductTypes>;
-  query: {
-    category: string;
-    search: string;
-  };
-}
-
-const Index = (props: IndexProps) => {
+const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Array<ProductTypes>>([]);
 
-  useEffect(() => {
-    if (props.products) {
-      setProducts(props.products);
-      setIsLoading(false);
+  const router = useRouter();
+
+  const getProductsBySearchList = useCallback(async () => {
+    const res = await getProductsBySearch(router.query.search);
+
+    if (!res.error) {
+      setProducts(res.data.products);
+    } else {
+      setProducts([]);
     }
-  }, [props.products]);
+  }, [router.query.search]);
+
+  useEffect(() => {
+    getProductsBySearchList();
+    setIsLoading(false);
+  }, [getProductsBySearchList, router.query.search]);
 
   return isLoading ? (
     <div className="flex justify-center items-center">
@@ -32,10 +36,10 @@ const Index = (props: IndexProps) => {
     </div>
   ) : (
     <>
-      <Products products={products} query={props.query} />
+      <Products products={products} query={router.query.search} />
       <div className="flex justify-center mb-12">
         <Link href="/">
-          <a className="flex py-2 px-4 w-28 text-left text-black dark:text-gray-100 dark:hover:text-white bg-[#faaf00] dark:hover:bg-gray-600 rounded-r-full rounded-l-full">
+          <a className="flex py-2 px-4 w-28 text-left text-black dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600 rounded-r-full rounded-l-full bg-[#faaf00]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-6 h-6"
@@ -51,28 +55,6 @@ const Index = (props: IndexProps) => {
       </div>
     </>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const productsBySearch = await getProductsBySearch(query.search);
-
-  if (productsBySearch.data.data.length > 0) {
-    return {
-      props: {
-        products: productsBySearch.data.data,
-        query,
-      },
-    };
-  }
-
-  const products = await getProductsByCategory(query.category);
-
-  return {
-    props: {
-      products: products.data.data || productsBySearch.data.data,
-      query,
-    },
-  };
 };
 
 Index.getLayout = FluidLayout;
