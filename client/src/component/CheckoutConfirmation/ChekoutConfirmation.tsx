@@ -34,25 +34,33 @@ export const ChekoutConfirmation = () => {
     } else {
       const dataFromLocal = Cookies.get("transaction");
       const data = JSON.parse(dataFromLocal!);
-      const { product_id, payment_id, total_item, total_price, category_id } = data.transaction;
+      const { productID, paymentID, totalItem, totalPrice } = data.transaction;
       const transaction = {
-        product_id,
-        category_id,
-        total_item,
-        total_price,
-        payment_id: payment_id.id,
+        productID,
+        paymentID,
+        totalItem,
+        totalPrice,
+        address: data.address,
       };
 
-      await setTransaction(transaction, token);
+      const result = await setTransaction(transaction, token);
 
-      Swal.fire({
-        icon: "success",
-        title: "Transaksi Berhasil!",
-        timer: 3000,
-      });
+      if (result.error) {
+        Swal.fire({
+          icon: "error",
+          title: "Transaksi Error!",
+          timer: 3000,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "Transaksi Berhasil!",
+          timer: 3000,
+        });
 
-      router.push("/");
-      Cookies.remove("transaction");
+        router.push("/");
+        Cookies.remove("transaction");
+      }
     }
   };
 
@@ -77,7 +85,7 @@ export const ChekoutConfirmation = () => {
       <div className="flex flex-wrap space-x-4">
         <button
           onClick={handleBack}
-          className=" flex justify-center items-center py-2 px-4 text-base text-[#faaf00] font-semibold text-center bg-gray-800 rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none"
+          className=" flex justify-center items-center py-2 px-4 text-base font-semibold text-center bg-gray-800 rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none text-[#faaf00]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +100,7 @@ export const ChekoutConfirmation = () => {
         </button>
         <button
           onClick={handleSubmit}
-          className=" flex justify-center items-center py-2 px-4 text-base font-semibold text-center text-black bg-[#faaf00] rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none"
+          className=" flex justify-center items-center py-2 px-4 text-base font-semibold text-center text-black rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none bg-[#faaf00]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

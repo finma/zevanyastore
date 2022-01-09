@@ -5,16 +5,15 @@ import NumberFormat from "react-number-format";
 import { useCart } from "react-use-cart";
 
 interface TableRowProps {
-  id: number;
+  id: string;
   name: string;
   price: number;
   category: string;
-  slug: string;
   image: string;
 }
 
 export const CartTableRow = (props: TableRowProps) => {
-  const { id, name, price, category, slug, image } = props;
+  const { id, name, price, category, image } = props;
   const API_IMG = process.env.NEXT_PUBLIC_IMG;
   const src = `${API_IMG}/${image}`;
 
@@ -58,14 +57,14 @@ export const CartTableRow = (props: TableRowProps) => {
       </td>
       <td className="py-3 px-4 text-base font-medium text-center whitespace-nowrap">
         <div className="flex flex-col space-y-4">
-          <Link href={`/product/${slug}`}>
-            <a className="py-2 px-4 w-full text-sm font-semibold text-center text-white bg-pastel-blue hover:bg-pastel-blue rounded-r-full rounded-l-full focus:ring-2 focus:ring-pastel-blue focus:ring-offset-2 focus:ring-offset-blue-200 shadow-md transition duration-200 ease-in focus:outline-none">
+          <Link href={`/product/${id}`}>
+            <a className="py-2 px-4 w-full text-sm font-semibold text-center text-white rounded-r-full rounded-l-full focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-200 shadow-md transition duration-200 ease-in focus:outline-none bg-pastel-blue hover:bg-pastel-blue focus:ring-pastel-blue">
               Checkout
             </a>
           </Link>
           <button
             onClick={handleDelete}
-            className="py-2 px-4 w-full text-sm font-semibold text-center text-pastel-blue bg-white hover:bg-gray-50 rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none"
+            className="py-2 px-4 w-full text-sm font-semibold text-center bg-white hover:bg-gray-50 rounded-r-full rounded-l-full shadow-md transition duration-200 ease-in focus:outline-none text-pastel-blue"
           >
             Hapus
           </button>

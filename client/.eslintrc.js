@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
-  parserOptions: { project: "./tsconfig.json" },
+  parserOptions: { project: "tsconfig.json", tsconfigRootDir: __dirname },
   env: { es2021: true, browser: true, jest: true, node: true },
   plugins: ["simple-import-sort", "tailwindcss", "import-access"],
   extends: [
@@ -41,7 +41,7 @@ module.exports = {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "tailwindcss/classnames-order": "warn",
-    "tailwindcss/no-custom-classname": "warn",
+    "tailwindcss/no-custom-classname": "off",
     "tailwindcss/no-contradicting-classname": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-var-requires": "off",

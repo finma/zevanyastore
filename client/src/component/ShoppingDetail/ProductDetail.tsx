@@ -22,8 +22,8 @@ export const ProductDetail = (props: { product: ProductTypes }) => {
       </p>
       <p className="mt-2 text-base text-gray-600">
         Kategori :{" "}
-        <Link href={`/category/${product?.category?.name}`}>
-          <a className=" font-medium text-pastel-blue">{product?.category?.name}</a>
+        <Link href={`/category/${product?.category}`}>
+          <a className=" font-medium text-pastel-blue">{product?.category}</a>
         </Link>
       </p>
       <div className="mt-4 text-lg text-gray-800">{ReactHtmlParser(product.description)}</div>

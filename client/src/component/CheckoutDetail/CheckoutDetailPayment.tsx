@@ -6,16 +6,16 @@ import { useEffect, useState } from "react";
 export const CheckoutDetailPayment = () => {
   const [transaction, setTransaction] = useState({
     type: "",
-    bank_name: "",
+    bankName: "",
     name: "",
-    no_rekening: "",
+    noRekening: "",
   });
 
   useEffect(() => {
     const dataFromLocal = Cookies.get("transaction");
     const data = JSON.parse(dataFromLocal!);
 
-    setTransaction(data.transaction.payment_id);
+    setTransaction(data.transaction.paymentID);
   }, []);
 
   return (
@@ -28,7 +28,7 @@ export const CheckoutDetailPayment = () => {
         </p>
         <p className="flex justify-between text-lg font-normal">
           <span>Nama Bank</span>
-          <span className="font-semibold">{transaction.bank_name}</span>
+          <span className="font-semibold">{transaction.bankName}</span>
         </p>
         <p className="flex justify-between text-lg font-normal">
           <span>Pemilik Rekening</span>
@@ -36,7 +36,7 @@ export const CheckoutDetailPayment = () => {
         </p>
         <p className="flex justify-between text-lg font-normal">
           <span>No Rekening</span>
-          <span className="font-semibold">{transaction.no_rekening}</span>
+          <span className="font-semibold">{transaction.noRekening}</span>
         </p>
       </div>
     </div>

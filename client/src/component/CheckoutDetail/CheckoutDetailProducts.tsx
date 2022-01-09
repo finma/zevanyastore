@@ -8,11 +8,11 @@ export const CheckoutDetailProducts = () => {
   const [product, setProduct] = useState({
     name: "",
     price: 0,
-    category: { name: "" },
+    category: "",
   });
   const [transaction, setTransaction] = useState({
-    total_item: 0,
-    total_price: 0,
+    totalItem: 0,
+    totalPrice: 0,
   });
 
   useEffect(() => {
@@ -33,11 +33,11 @@ export const CheckoutDetailProducts = () => {
         </p>
         <p className="flex justify-between text-lg font-normal">
           <span>Kategori</span>
-          <span className="font-semibold">{product.category.name}</span>
+          <span className="font-semibold">{product.category}</span>
         </p>
         <p className="flex justify-between text-lg font-normal">
           <span>Total Barang</span>
-          <span className="font-semibold">{transaction.total_item}</span>
+          <span className="font-semibold">{transaction.totalItem}</span>
         </p>
         <p className="flex justify-between text-lg font-normal">
           <span>Harga Barang</span>
@@ -55,7 +55,7 @@ export const CheckoutDetailProducts = () => {
           <span>Total</span>
           <span className="font-semibold">
             <NumberFormat
-              value={transaction.total_price}
+              value={transaction.totalPrice}
               prefix="Rp. "
               thousandSeparator="."
               decimalSeparator=","

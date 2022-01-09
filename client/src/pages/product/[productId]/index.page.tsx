@@ -40,8 +40,8 @@ const Index = (props: { product: ProductTypes }) => {
 };
 
 export const getStaticPaths = async () => {
-  const { products } = await getProducts();
-  const paths = products.map((product: ProductTypes) => {
+  const { data } = await getProducts();
+  const paths = data.products.map((product: ProductTypes) => {
     return {
       params: {
         productId: product._id,
@@ -63,10 +63,10 @@ interface GetStaticProps {
 
 export const getStaticProps = async ({ params }: GetStaticProps) => {
   const { productId } = params;
-  const { product } = await getProductDetail(productId);
+  const { data } = await getProductDetail(productId);
 
   return {
-    props: { product },
+    props: { product: data.product },
   };
 };
 

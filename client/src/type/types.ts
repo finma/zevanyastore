@@ -12,7 +12,7 @@ export interface ProductTypes {
   price: number;
   stock: number;
   updated_at: string;
-  category: CategoryTypes;
+  category: string;
 }
 
 export interface PaymentTypes {
@@ -41,8 +41,8 @@ export interface TransactionTypes {
 }
 
 export interface CheckoutTypes {
-  product_id: number;
-  payment_id: number;
-  total_item: number;
-  total_price: number;
+  productID: string;
+  paymentID: string;
+  totalItem: number;
+  totalPrice: number;
 }

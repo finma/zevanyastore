@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-handler-names */
 /* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable tailwindcss/classnames-order */
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
 import { useCart } from "react-use-cart";
+import { getUser } from "src/services/auth";
 import { getPayments } from "src/services/payment";
 import type { PaymentTypes } from "src/type/types";
 import Swal from "sweetalert2";
@@ -18,10 +18,12 @@ export const ShoppingDetail = (props: { product: any }) => {
   const { addItem } = useCart();
   const router = useRouter();
 
+  const [token, setToken] = useState("");
   const [counter, setCounter] = useState(1);
   const [price, setPrice] = useState(product.price);
   const [payments, setPayments] = useState([]);
   const [paymentId, setPaymentId] = useState({});
+  const [customerId, setCustomerId] = useState("");
 
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -34,9 +36,24 @@ export const ShoppingDetail = (props: { product: any }) => {
     setPayments(res.payments);
   }, []);
 
+  const getUserData = useCallback(async (token) => {
+    const res = await getUser(token);
+
+    setCustomerId(res.data._id);
+  }, []);
+
   useEffect(() => {
+    const tokenBase64 = Cookies.get("token");
+
+    if (tokenBase64) {
+      const tokenFromLocal = Buffer.from(tokenBase64, "base64").toString("binary");
+
+      getUserData(tokenFromLocal);
+      setToken(tokenFromLocal);
+    }
+
     getPaymentList();
-  }, [getPaymentList]);
+  }, [getPaymentList, getUserData]);
 
   const handlePaymentChange = (payment: any) => {
     setPaymentId(payment);
@@ -57,7 +74,11 @@ export const ShoppingDetail = (props: { product: any }) => {
   };
 
   const handleCart = () => {
-    addItem(product, counter);
+    const newProduct = {
+      id: product._id,
+      ...product,
+    };
+    addItem(newProduct, counter);
     router.push("/cart");
   };
 
@@ -69,23 +90,28 @@ export const ShoppingDetail = (props: { product: any }) => {
         text: "Pilih Metode Pembayaran dan Isi Alamat Lengkap!",
       });
     } else {
-      const newAddress = { address, city, province, postcode };
-      const data = {
-        transaction: {
-          productID: product.id,
-          paymentID: paymentId,
-          categoryID: product.category_id,
-          totalItem: counter,
-          totalPrice: price,
-        },
-        product,
-        address: newAddress,
-      };
+      if (!token) {
+        router.push("/login");
+      } else {
+        const newAddress = { address, city, province, postcode };
+        const data = {
+          transaction: {
+            customerID: customerId,
+            productID: product._id,
+            paymentID: paymentId,
+            categoryID: product.category,
+            totalItem: counter,
+            totalPrice: price,
+          },
+          product,
+          address: newAddress,
+        };
 
-      localStorage.setItem("transaction", JSON.stringify(data));
-      Cookies.set("transaction", JSON.stringify(data));
+        localStorage.setItem("transaction", JSON.stringify(data));
+        Cookies.set("transaction", JSON.stringify(data));
 
-      router.push("/checkout");
+        router.push("/checkout");
+      }
     }
   };
 

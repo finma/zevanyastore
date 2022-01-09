@@ -8,7 +8,7 @@ const Index = () => {
     <>
       <HeroSection />
       <Category />
-      <Products />
+      <Products query={undefined} products={[]} />
     </>
   );
 };

@@ -8,7 +8,7 @@ export const getProducts = async () => {
     return err.response;
   });
 
-  return res.data.data;
+  return res.data;
 };
 
 export const getProductsByCategory = async (category: string | string[] | undefined, page?: number) => {
@@ -35,5 +35,5 @@ export const getProductDetail = async (id: any) => {
     return err.response;
   });
 
-  return res.data.data;
+  return res.data;
 };

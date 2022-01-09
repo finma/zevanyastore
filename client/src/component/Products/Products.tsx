@@ -15,7 +15,7 @@ export const Products = (props: ProductsProps) => {
   const getProductList = useCallback(async () => {
     const res = await getProducts();
 
-    setProducts(res.products);
+    setProducts(res.data.products);
   }, []);
 
   useEffect(() => {
