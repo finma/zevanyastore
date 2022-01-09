@@ -43,7 +43,29 @@ let transactionSchema = mongoose.Schema(
       },
     },
     historyCustomer: {
+      customerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Customer",
+      },
       name: { type: String, require: true },
+    },
+    historyAddress: {
+      address: {
+        type: String,
+        require: true,
+      },
+      city: {
+        type: String,
+        require: true,
+      },
+      postcode: {
+        type: String,
+        require: true,
+      },
+      province: {
+        type: String,
+        require: true,
+      },
     },
     name: {
       type: String,
@@ -63,14 +85,6 @@ let transactionSchema = mongoose.Schema(
       type: String,
       enum: ["pending", "success", "failed"],
       default: "pending",
-    },
-    customer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer",
-    },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
     },
   },
   { timestamps: true }

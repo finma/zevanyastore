@@ -1,48 +1,27 @@
-import Category from "../category/model";
-import Customer from "./model";
 import Payment from "../payment/model";
 import Product from "../product/model";
 import Transaction from "../transaction/model";
 
 export const createTransaction = async (req, res) => {
   try {
-    const {
-      customerID,
-      productID,
-      paymentID,
-      categoryID,
-      totalItem,
-      totalPrice,
-    } = req.body;
-
-    const customer = await Customer.findOne({ _id: customerID });
-
-    if (!customer) {
-      return res.status(404).json({ message: "Customer not found!" });
-    }
+    const { productID, paymentID, totalItem, totalPrice, address } = req.body;
 
     const product = await Product.findOne({ _id: productID });
 
     if (!product) {
-      return res.status(404).json({ message: "Product not found!" });
+      return res.status(404).json({ error: 1, message: "Product not found!" });
     }
 
     const payment = await Payment.findOne({ _id: paymentID });
 
     if (!payment) {
-      return res.status(404).json({ message: "Payment not found!" });
-    }
-
-    const category = await Category.findOne({ _id: categoryID });
-
-    if (!category) {
-      return res.status(404).json({ message: "Category not found!" });
+      return res.status(404).json({ error: 1, message: "Payment not found!" });
     }
 
     const payload = {
       historyProduct: {
         name: product._doc.name,
-        category: category._doc.name,
+        category: product._doc.category,
         stock: product._doc.stock,
         price: product._doc.price,
         description: product._doc.description,
@@ -55,12 +34,17 @@ export const createTransaction = async (req, res) => {
         noRekening: payment._doc.noRekening,
       },
       historyCustomer: {
-        name: customer._doc.name,
+        customerId: req.customer._id,
+        name: req.customer.name,
+      },
+      historyAddress: {
+        address: address.address,
+        city: address.city,
+        postcode: address.postcode,
+        province: address.province,
       },
       totalPrice,
       totalItem,
-      customer: customer._doc._id,
-      category: category._doc._id,
     };
 
     const transaction = await Transaction(payload);
@@ -71,6 +55,8 @@ export const createTransaction = async (req, res) => {
       .status(201)
       .json({ error: 0, message: "checkout success", data: payload });
   } catch (error) {
-    res.status(500).json({ message: error.message || "Internal server error" });
+    res
+      .status(500)
+      .json({ error: 1, message: error.message || "Internal server error" });
   }
 };

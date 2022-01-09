@@ -83,6 +83,8 @@ export const getUser = async (req, res) => {
       data: { name: customer.name },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message || "Internal server error" });
+    res
+      .status(500)
+      .json({ error: 1, message: error.message || "Internal server error" });
   }
 };
