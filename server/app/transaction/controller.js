@@ -10,8 +10,6 @@ export const index = async (req, res) => {
 
     const transactions = await Transaction.find();
 
-    console.log(transactions);
-
     res.render("admin/transaction/view_transaction", {
       title: "Transaction",
       name: req.session.user.name,
@@ -26,12 +24,40 @@ export const index = async (req, res) => {
   }
 };
 
+export const setStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.query;
+
+    console.log(req);
+
+    if (status === "success") {
+      await Transaction.findByIdAndUpdate({ _id: id }, { status });
+
+      req.flash("alertMessage", "Success accept transaction");
+      req.flash("alertStatus", "success");
+
+      res.redirect("/transaction");
+    } else {
+      await Transaction.findByIdAndUpdate({ _id: id }, { status });
+
+      req.flash("alertMessage", "Success reject transaction");
+      req.flash("alertStatus", "success");
+
+      res.redirect("/transaction");
+    }
+  } catch (error) {
+    req.flash("alertMessage", `${error.message}`);
+    req.flash("alertStatus", "danger");
+    res.redirect("/transaction");
+  }
+};
+
 //? API
 export const getTransactions = async (req, res) => {
   try {
     const { status = "" } = req.params;
 
-    console.log(req.customer);
     let criteria = {};
 
     if (status.length) {
@@ -54,7 +80,9 @@ export const getTransactions = async (req, res) => {
     const transactions = await Transaction.find(criteria);
 
     let total = await Transaction.aggregate([
-      { $match: criteria },
+      {
+        $match: criteria,
+      },
       {
         $group: {
           _id: null,

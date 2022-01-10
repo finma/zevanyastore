@@ -45,6 +45,7 @@ export const createTransaction = async (req, res) => {
       },
       totalPrice,
       totalItem,
+      customer: req.customer._id,
     };
 
     const transaction = await Transaction(payload);

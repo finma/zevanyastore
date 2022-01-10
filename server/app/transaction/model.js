@@ -86,6 +86,10 @@ let transactionSchema = mongoose.Schema(
       enum: ["pending", "success", "failed"],
       default: "pending",
     },
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Customer",
+    },
   },
   { timestamps: true }
 );
