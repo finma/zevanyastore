@@ -13,7 +13,7 @@ export const PaymentDetail = (props: { payment: PaymentTypes }) => {
         </p>
         <p className="flex justify-between text-lg font-normal">
           <span>Nama Bank</span>
-          <span className="font-semibold">{payment.bank_name}</span>
+          <span className="font-semibold">{payment.bankName}</span>
         </p>
         <p className="flex justify-between text-lg font-normal">
           <span>Pemilik Rekening</span>
@@ -21,7 +21,7 @@ export const PaymentDetail = (props: { payment: PaymentTypes }) => {
         </p>
         <p className="flex justify-between text-lg font-normal">
           <span>No Rekening</span>
-          <span className="font-semibold">{payment.no_rekening}</span>
+          <span className="font-semibold">{payment.noRekening}</span>
         </p>
       </div>
     </div>

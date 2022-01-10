@@ -3,21 +3,21 @@ import cx from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import NumberFormat from "react-number-format";
-import type { CategoryTypes, ProductTypes } from "src/type/types";
+import type { ProductTypes } from "src/type/types";
 
 interface TableRowProps {
   no: number;
-  id: number;
-  total_item: number;
-  total_price: number;
+  id: string;
+  totalItem: number;
+  totalPrice: number;
   status: string;
   isAction?: boolean;
   product: ProductTypes;
-  category: CategoryTypes;
+  category: string;
 }
 
 export const TableRow = (props: TableRowProps) => {
-  const { id, product, total_item, total_price, status, category, isAction } = props;
+  const { id, product, totalItem, totalPrice, status, category, isAction } = props;
   const API_IMG = process.env.NEXT_PUBLIC_IMG;
   const src = `${API_IMG}/${product.image}`;
   const classStatus = cx({
@@ -50,7 +50,7 @@ export const TableRow = (props: TableRowProps) => {
         </div>
       </td>
       <td className="py-3 px-4 whitespace-nowrap">
-        <div className="text-base text-gray-900">{category.name}</div>
+        <div className="text-base text-gray-900">{category}</div>
       </td>
       <td className="py-3 px-4 whitespace-nowrap">
         <div className="text-base text-gray-900">
@@ -64,12 +64,12 @@ export const TableRow = (props: TableRowProps) => {
         </div>
       </td>
       <td className="py-3 px-4 whitespace-nowrap">
-        <div className="text-base text-center text-gray-900">{total_item}</div>
+        <div className="text-base text-center text-gray-900">{totalItem}</div>
       </td>
       <td className="py-3 px-4 whitespace-nowrap">
         <div className="text-base text-gray-900">
           <NumberFormat
-            value={total_price}
+            value={totalPrice}
             prefix="Rp. "
             thousandSeparator="."
             decimalSeparator=","
@@ -83,7 +83,7 @@ export const TableRow = (props: TableRowProps) => {
       {isAction && (
         <td className="py-3 px-4 text-base font-medium text-center whitespace-nowrap">
           <Link href={`/transactions/${id}`}>
-            <a className="py-2 px-4 w-full text-sm font-semibold text-center text-white bg-pastel-blue hover:bg-pastel-blue rounded-r-full rounded-l-full focus:ring-2 focus:ring-pastel-blue focus:ring-offset-2 focus:ring-offset-blue-200 shadow-md transition duration-200 ease-in focus:outline-none">
+            <a className="py-2 px-4 w-full text-sm font-semibold text-center text-white rounded-r-full rounded-l-full focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-200 shadow-md transition duration-200 ease-in focus:outline-none bg-pastel-blue hover:bg-pastel-blue focus:ring-pastel-blue">
               Detail
             </a>
           </Link>

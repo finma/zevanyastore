@@ -16,7 +16,7 @@ export const setTransaction = async (data: CheckoutTypes, token: any) => {
 };
 
 export const getTransactions = async (token: any) => {
-  const url = `${ROOT_API}/checkout/transactions`;
+  const url = `${ROOT_API}/transaction`;
   const headers = { Authorization: token };
 
   const res = await axios({ url, method: "GET", headers }).catch((err: { response: any }) => {
@@ -27,7 +27,7 @@ export const getTransactions = async (token: any) => {
 };
 
 export const getTransactionDetail = async (token: any, id: any) => {
-  const url = `${ROOT_API}/checkout/transactions/${id}/detail`;
+  const url = `${ROOT_API}/transaction/detail/${id}`;
   const headers = { Authorization: token };
 
   const res = await axios({ url, method: "GET", headers }).catch((err: { response: any }) => {
