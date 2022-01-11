@@ -8,6 +8,8 @@ import createError from "http-errors";
 import methodOverride from "method-override";
 import flash from "connect-flash";
 import session from "express-session";
+import MongoStore from "connect-mongo";
+import { MONGO_URL } from "./config";
 
 //? WEB
 import userRouter from "./app/user/router";
@@ -37,10 +39,7 @@ app.set("view engine", "ejs");
 
 app.use(
   session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {},
+    store: MongoStore.create({ mongoUrl: MONGO_URL }),
   })
 );
 app.use(flash());
